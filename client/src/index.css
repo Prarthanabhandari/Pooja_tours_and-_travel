@@ -1,0 +1,646 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+
+  /* Premium RoadNest Theme Palette */
+  --bg-dark: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --border-glow: rgba(29, 36, 56, 0.1);
+  --border-light: #e2e8f0;
+  
+  --primary: #00A3C4; /* Pawar Travels Teal */
+  --primary-hover: #0089a4;
+  --secondary: #1e293b; 
+  --accent: #D9383A; /* Red Orange */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  
+  --glass-shadow: 0 10px 30px rgba(15, 23, 42, 0.04), 0 1px 8px rgba(15, 23, 42, 0.02);
+  --card-radius: 14px;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* CSS Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  overflow-x: hidden;
+  transition: var(--transition);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, input, select, textarea {
+  outline: none;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-dim);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Utility Layouts */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Glassmorphism Cards */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  transition: var(--transition);
+}
+
+.glass-panel:hover {
+  border-color: var(--border-glow);
+  box-shadow: 0 8px 32px 0 rgba(0, 242, 254, 0.08);
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: var(--primary-hover);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
+
+.btn-secondary {
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--text-muted);
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.form-input {
+  background: var(--bg-input);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Search Console Tabs - Sleek, modern floating tabs */
+.tab-header {
+  display: flex;
+  gap: 4px;
+  border-bottom: none;
+  margin-bottom: -1px;
+  position: relative;
+  z-index: 10;
+  padding-left: 8px;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.88rem;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  border-radius: 10px 10px 0 0;
+  border: 1px solid transparent;
+  transition: var(--transition);
+}
+
+.tab-btn:hover {
+  color: var(--primary);
+}
+
+.tab-btn.active {
+  background: var(--bg-card);
+  color: var(--primary);
+  border: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--bg-card);
+  font-weight: 700;
+}
+
+/* Hero Slider - Styled with RoadNest mountain landscape backdrop */
+.hero-slider {
+  position: relative;
+  height: 68vh;
+  min-height: 520px;
+  overflow: hidden;
+  background-image: linear-gradient(rgba(15, 23, 42, 0.25), rgba(15, 23, 42, 0.25)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(248,250,252,0.85) 0%, rgba(248,250,252,0.6) 40%, rgba(248,250,252,0) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 550px;
+  margin-left: 8%;
+  padding: 20px;
+  text-align: left;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--text-main);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+/* Modern Card Search Console */
+.search-console-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 0 16px 16px 16px;
+  padding: 24px;
+  box-shadow: var(--glass-shadow);
+}
+
+.search-form-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .search-form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .search-form-row button[type="submit"] {
+    grid-column: 1 / -1;
+  }
+  .search-console-card {
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Interactive Seat Map */
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(13, 16, 35, 0.6);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-light);
+}
+
+.seat-grid > div:nth-child(4n + 2) {
+  margin-right: 24px; /* Aisle gap */
+}
+
+.seat {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: #1e293b;
+  border: 1px solid #475569;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.seat:hover:not(.booked) {
+  background: var(--border-glow);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.seat.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #070913;
+}
+
+.seat.booked {
+  background: #334155;
+  border-color: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Credit Card Flip styles */
+.card-wrapper {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 360px;
+  height: 220px;
+  margin: 0 auto 30px auto;
+}
+
+.payment-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.payment-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #2c3e50 0%, #0f2027 100%);
+  padding: 20px 0;
+  justify-content: space-around;
+}
+
+.card-strip {
+  width: 100%;
+  height: 45px;
+  background: #0f172a;
+}
+
+.card-signature {
+  margin: 0 24px;
+  background: white;
+  height: 40px;
+  border-radius: 4px;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+  font-family: monospace;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Floating contact widget */
+.whatsapp-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #25d366;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  cursor: pointer;
+  z-index: 100;
+  transition: var(--transition);
+}
+
+.whatsapp-widget:hover {
+  transform: scale(1.1);
+}
+
+/* Headlight Blink Animations */
+@keyframes headlight-blink {
+  0%, 40%, 70%, 100% {
+    opacity: 0.05;
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0));
+  }
+  42%, 48% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 8px rgba(255, 253, 224, 0.95)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.8));
+  }
+  44% {
+    opacity: 0.1;
+  }
+  50%, 65% {
+    opacity: 0.95;
+    filter: drop-shadow(0 0 12px rgba(255, 253, 224, 0.98)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.85));
+  }
+}
+
+.headlight-glow-left {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,253,224,0.85) 40%, rgba(255,250,180,0) 80%);
+  z-index: 3;
+  animation: headlight-blink 5s infinite;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.headlight-glow-right {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,253,224,0.85) 45%, rgba(255,250,180,0) 80%);
+  z-index: 3;
+  animation: headlight-blink 5s infinite;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* ==========================================
+   HOMEPAGE CUSTOM SECTIONS
+   ========================================== */
+
+/* Forest Background Section */
+.forest-section {
+  position: relative;
+  background-image: linear-gradient(rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.5)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: scroll;
+  padding: 80px 0;
+  margin-top: 65px;
+  width: 100%;
+}
+
+.forest-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.18);
+  padding: 45px;
+  max-width: 960px;
+  margin: 0 auto;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Steps Pipeline */
+.steps-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  margin: 40px 0;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.steps-line {
+  position: absolute;
+  top: 45px;
+  left: 12%;
+  right: 12%;
+  height: 6px;
+  background: #e2e8f0;
+  z-index: 1;
+  border-radius: 3px;
+}
+
+.steps-line-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+  .steps-line {
+    display: none;
+  }
+}
+
+.step-node {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-width: 160px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 4px solid #e2e8f0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.step-node:hover .step-circle {
+  border-color: var(--primary);
+  transform: translateY(-5px) scale(1.04);
+  box-shadow: 0 15px 30px rgba(37, 99, 235, 0.15);
+}
+
+/* Fleet Cards */
+.fleet-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.fleet-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+  border-color: var(--primary);
+}
+
+.badge-round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  transition: var(--transition);
+  text-align: center;
+  padding: 8px;
+}
+
+.badge-round:hover {
+  transform: scale(1.08) rotate(5deg);
+  border-color: var(--secondary);
+}
+
+

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO and PWA Metadata -->
+    <title>Pooja Tours and Travel | Premium Cab & Bus Booking in Pune</title>
+    <meta name="description" content="Book affordable cabs and luxury buses online with Pooja Tours and Travel. Offering premium outstation packages to Shirdi, Mahabaleshwar, Mumbai, and local tours. Install app for offline booking." />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#00f2fe" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Service Worker Registration (Disabled during development to prevent aggressive caching) -->
+    <!--
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('Service Worker registered successfully!', reg.scope))
+            .catch(err => console.error('Service Worker registration failed:', err));
+        });
+      }
+    </script>
+    -->
+  </body>
+</html>

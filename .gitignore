@@ -1,0 +1,25 @@
+# Node modules
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Production build outputs
+client/dist/
+dist/
+
+# Environment variables
+.env
+server/.env
+
+# IDE / System files
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+Thumbs.db
+.gemini/
+antigravity/

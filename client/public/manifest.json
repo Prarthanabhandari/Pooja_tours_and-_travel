@@ -1,0 +1,10 @@
+{
+  "short_name": "Pooja Travels",
+  "name": "Pooja Tours and Travels",
+  "start_url": "/",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": []
+}
