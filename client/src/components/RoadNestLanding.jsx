@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function RoadNestLanding({ 
   searchParams, 
@@ -10,95 +10,154 @@ export default function RoadNestLanding({
   currentUser,
   handleLogout
 }) {
+  const [activeTab, setActiveTab] = useState('roundtrip');
+
+  const navLinks = [
+    { label: 'Home', action: () => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); } },
+    { label: 'Our Fleet', action: () => { setCurrentPage('home'); setTimeout(() => document.getElementById('fleet-section')?.scrollIntoView({ behavior: 'smooth' }), 100); } },
+    { label: 'Packages', action: () => setCurrentPage('packages') },
+    { label: 'Why Us', action: () => { setCurrentPage('home'); setTimeout(() => document.getElementById('why-us-section')?.scrollIntoView({ behavior: 'smooth' }), 100); } },
+    { label: 'Reviews', action: () => { setCurrentPage('home'); setTimeout(() => document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' }), 100); } },
+    { label: 'FAQs', action: () => { setCurrentPage('home'); setTimeout(() => document.getElementById('faqs-section')?.scrollIntoView({ behavior: 'smooth' }), 100); } },
+    { label: 'Contact Us', action: () => setCurrentPage('contact') },
+  ];
+
+  const trustFeatures = [
+    { icon: '🚗', title: 'Wide Range of SUVs', desc: 'Perfect for families & groups' },
+    { icon: '💰', title: 'Best Price Guarantee', desc: 'Competitive rates always' },
+    { icon: '📅', title: 'Flexible Booking', desc: 'Change or cancel anytime' },
+    { icon: '📞', title: '24/7 Customer Support', desc: "We're here to help" },
+  ];
+
+  const tabs = [
+    { id: 'roundtrip', label: '🚗 Pick-up & Return' },
+    { id: 'oneway', label: 'One Way' },
+    { id: 'airport', label: '✈️ Airport Transfer' },
+  ];
+
   return (
-    <div className="relative min-h-screen w-full flex flex-col justify-between font-sans selection:bg-[#F26A1B] selection:text-white bg-white overflow-x-hidden">
-      
-      {/* 1. TOP HEADER NAVIGATION */}
-      <header className="bg-white border-b border-gray-150 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
-          
-          {/* Logo block */}
-          <div 
-            onClick={() => {
-              setCurrentPage('home');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="flex items-center gap-3 cursor-pointer group"
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+
+      {/* ── HEADER ──────────────────────────────────────────── */}
+      <header style={{
+        background: '#ffffff',
+        borderBottom: '1px solid #e2e8f0',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        width: '100%',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.06)'
+      }}>
+        <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 28px',
+          height: '72px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '20px'
+        }}>
+
+          {/* Logo */}
+          <div
+            onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}
           >
-            {/* Dark car vector outline inside house shape */}
-            <div className="w-11 h-11 bg-[#0B1B3D] rounded-lg flex items-center justify-center text-white shadow-md">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div style={{
+              width: '42px', height: '42px',
+              background: '#0B1B3D',
+              borderRadius: '10px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              boxShadow: '0 2px 8px rgba(11,27,61,0.18)'
+            }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 <path d="M9 22V12h6v10" />
-                <circle cx="12" cy="9" r="2" fill="currentColor" />
               </svg>
             </div>
-            <div className="flex flex-col">
-              <span className="text-[#0B1B3D] text-xl font-extrabold tracking-tight leading-none">POOJA</span>
-              <span className="text-gray-400 text-[7px] font-black tracking-[2.5px] uppercase mt-0.5">Tours & Travel</span>
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+              <span style={{ fontSize: '1.25rem', fontWeight: 900, color: '#0B1B3D', letterSpacing: '-0.5px' }}>
+                Road<span style={{ color: '#F26A1B' }}>Nest</span>
+              </span>
+              <span style={{ fontSize: '0.6rem', color: '#94a3b8', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginTop: '1px' }}>RENTALS</span>
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8">
-            <button 
-              onClick={() => setCurrentPage('home')}
-              className="text-[#0B1B3D] font-bold text-sm relative py-2 border-b-2 border-[#F26A1B] transition-colors"
-            >
-              Home
-            </button>
-            {['Our Fleet', 'Packages', 'Why Us', 'Reviews', 'FAQs', 'Contact Us'].map((link) => (
+          {/* Nav */}
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            {navLinks.map((link) => (
               <button
-                key={link}
-                onClick={() => {
-                  if (link === 'Contact Us') {
-                    setCurrentPage('contact');
-                  } else if (link === 'Packages') {
-                    setCurrentPage('packages');
-                  } else {
-                    setCurrentPage('home');
-                    const targetId = link.toLowerCase().replace(/\s+/g, '-');
-                    setTimeout(() => document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' }), 100);
-                  }
+                key={link.label}
+                onClick={link.action}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '6px 10px',
+                  fontSize: '0.83rem',
+                  fontWeight: 700,
+                  color: '#1e293b',
+                  borderRadius: '6px',
+                  transition: 'color 0.15s',
+                  whiteSpace: 'nowrap'
                 }}
-                className="text-[#0B1B3D] hover:text-[#F26A1B] font-bold text-sm transition-colors py-2"
+                onMouseEnter={e => e.currentTarget.style.color = '#F26A1B'}
+                onMouseLeave={e => e.currentTarget.style.color = '#1e293b'}
               >
-                {link}
+                {link.label}
               </button>
             ))}
           </nav>
 
-          {/* Right Side Section: Hotline & CTA Button */}
-          <div className="flex items-center gap-6">
-            <div className="hidden lg:flex items-center gap-3">
-              <span className="text-2xl text-[#F26A1B]">📞</span>
-              <div className="flex flex-col">
-                <span className="text-sm font-black text-[#0B1B3D]">+1 (888) 742-6837</span>
-                <span className="text-[10px] text-gray-400 mt-[-2px] font-bold">Mon-Sun: 7AM - 10PM</span>
+          {/* Right: Phone + Login */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexShrink: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '36px', height: '36px', borderRadius: '50%',
+                background: 'rgba(242,106,27,0.1)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F26A1B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.4 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.1a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#0B1B3D' }}>+91 73871 29287</span>
+                <span style={{ fontSize: '0.62rem', color: '#94a3b8', fontWeight: 600, marginTop: '2px' }}>Mon-Sun: 7AM – 10PM</span>
               </div>
             </div>
 
             {currentUser ? (
-              <div className="flex items-center gap-4">
-                <button 
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <button
                   onClick={() => setCurrentPage('dashboard')}
-                  className="bg-[#0B1B3D] text-white px-5 py-2.5 rounded-md font-bold text-sm hover:bg-[#1a2d54] transition-all shadow-md"
+                  style={{
+                    background: '#0B1B3D', color: '#fff', border: 'none', cursor: 'pointer',
+                    padding: '9px 18px', borderRadius: '8px', fontWeight: 700, fontSize: '0.82rem',
+                    display: 'flex', alignItems: 'center', gap: '6px'
+                  }}
                 >
                   👤 {currentUser.name.split(' ')[0]}
                 </button>
-                <button 
-                  onClick={handleLogout}
-                  className="text-red-500 hover:text-red-700 text-sm font-bold"
-                >
+                <button onClick={handleLogout} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444', fontWeight: 700, fontSize: '0.82rem' }}>
                   Logout
                 </button>
               </div>
             ) : (
-              <button 
+              <button
                 onClick={() => { setAuthMode('login'); setShowAuthModal(true); }}
-                className="bg-[#0B1B3D] text-white px-5 py-2.5 rounded-md font-bold text-sm hover:bg-[#1a2d54] transition-all flex items-center gap-2 shadow-md"
+                style={{
+                  background: '#0B1B3D', color: '#fff', border: 'none', cursor: 'pointer',
+                  padding: '10px 20px', borderRadius: '8px', fontWeight: 700, fontSize: '0.82rem',
+                  display: 'flex', alignItems: 'center', gap: '8px',
+                  boxShadow: '0 2px 8px rgba(11,27,61,0.18)',
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = '#1a2d54'}
+                onMouseLeave={e => e.currentTarget.style.background = '#0B1B3D'}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
@@ -109,247 +168,311 @@ export default function RoadNestLanding({
         </div>
       </header>
 
-      {/* 2. HERO / BACKGROUND CONTAINER */}
-      <section className="relative flex-1 min-h-[82vh] w-full flex items-center overflow-visible py-12">
-        {/* Full-Screen Immersive Background Image */}
-        <div className="absolute inset-0 w-full h-full z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1600&q=80" 
-            alt="Pooja Travels 17-Seater Bus in Nature" 
-            className="w-full h-full object-cover"
-          />
-          {/* Subtle light background gradient overlay on the left to make text/widget highly readable */}
-          <div className="absolute inset-y-0 left-0 w-full md:w-[60%] bg-gradient-to-r from-white via-white/85 to-transparent z-10 pointer-events-none"></div>
-        </div>
+      {/* ── HERO SECTION ────────────────────────────────────── */}
+      <section style={{
+        position: 'relative',
+        width: '100%',
+        minHeight: '580px',
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden'
+      }}>
+        {/* Background photo */}
+        <img
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1800&q=85"
+          alt="Family SUV road trip at mountain lake"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: 'center 40%',
+            zIndex: 0
+          }}
+        />
 
-        {/* Content Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Column: Typography & Floating Booking Widget */}
-            <div className="lg:col-span-6 flex flex-col items-start">
-              
-              {/* Typography block */}
-              <div className="mb-6">
-                <h2 className="text-[#0B1B3D] text-4xl sm:text-5xl font-black tracking-tight leading-[1.08] mb-1">
-                  More Space.
-                </h2>
-                <h2 className="text-[#0B1B3D] text-4xl sm:text-5xl font-black tracking-tight leading-[1.08] mb-1">
-                  More Memories.
-                </h2>
-                <h2 className="text-[#F26A1B] text-5xl font-bold font-script mt-2 font-cursive" style={{ fontFamily: "'Caveat', cursive" }}>
-                  Better Together.
-                </h2>
-                <p className="text-[#475569] text-sm md:text-base font-semibold leading-relaxed mt-4 max-w-md">
-                  Premium SUVs and family cars for comfortable journeys and unforgettable road trip experiences.
-                </p>
-              </div>
+        {/* White gradient overlay — left side for readability */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to right, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.88) 38%, rgba(255,255,255,0.4) 58%, rgba(255,255,255,0) 75%)',
+          zIndex: 1
+        }} />
 
-              {/* Floating Booking Widget Card */}
-              <div className="bg-white rounded-2xl p-6 shadow-[0_20px_50px_rgba(11,27,61,0.18)] border border-gray-100 w-full max-w-xl transition-all">
-                <h3 className="text-[#0B1B3D] font-extrabold text-sm mb-4">Book Your Perfect Ride</h3>
-                
-                {/* Internal Tabs */}
-                <div className="flex gap-2 mb-4 border-b border-gray-100 pb-3">
-                  <button 
-                    type="button"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-50 border border-gray-200 text-[#0B1B3D]"
-                  >
-                    <span>🚗</span> Pick-up & Return
-                  </button>
-                  <button 
-                    type="button"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-gray-500 hover:text-[#0B1B3D] hover:bg-gray-50 transition-all"
-                  >
-                    One Way
-                  </button>
-                  <button 
-                    type="button"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-gray-500 hover:text-[#0B1B3D] hover:bg-gray-50 transition-all"
-                  >
-                    Airport Transfer
-                  </button>
-                </div>
+        {/* Content */}
+        <div style={{
+          position: 'relative', zIndex: 2,
+          maxWidth: '1280px', margin: '0 auto',
+          padding: '60px 28px',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '40px'
+        }}>
+          {/* Left column: headline + booking widget */}
+          <div style={{ flex: '0 0 auto', width: '100%', maxWidth: '520px' }}>
 
-                {/* Form fields */}
-                <form onSubmit={handleSearchSubmit} className="space-y-4">
-                  {/* Row 1: Pick-up & Return Location */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="flex flex-col gap-1 relative">
-                      <label className="text-gray-400 text-[9px] font-black uppercase tracking-wider">📍 Pick-up Location</label>
-                      <select 
-                        value={searchParams.fromCity}
-                        onChange={(e) => setSearchParams({ ...searchParams, fromCity: e.target.value })}
-                        className="w-full text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-lg h-9 px-3 outline-none focus:border-[#F26A1B] focus:bg-white transition-all"
-                        required
-                      >
-                        <option value="">City, Airport, or Location</option>
-                        <option value="Pune, Maharashtra, India">Pune City</option>
-                        <option value="Mumbai, Maharashtra, India">Mumbai City</option>
-                        <option value="Mumbai Airport, Maharashtra, India">Mumbai Airport</option>
-                        <option value="Nashik, Maharashtra, India">Nashik City</option>
-                      </select>
-                    </div>
-
-                    <div className="flex flex-col gap-1 relative">
-                      <label className="text-gray-400 text-[9px] font-black uppercase tracking-wider">📍 Return Location</label>
-                      <select 
-                        value={searchParams.toCity}
-                        onChange={(e) => setSearchParams({ ...searchParams, toCity: e.target.value })}
-                        className="w-full text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-lg h-9 px-3 outline-none focus:border-[#F26A1B] focus:bg-white transition-all"
-                        required
-                      >
-                        <option value="">Same as pick-up</option>
-                        <option value="Mahabaleshwar, Maharashtra, India">Mahabaleshwar</option>
-                        <option value="Mumbai, Maharashtra, India">Mumbai City</option>
-                        <option value="Shirdi, Maharashtra, India">Shirdi Temple</option>
-                        <option value="Pune, Maharashtra, India">Pune City</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Row 2: Date & Time Picker */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="flex flex-col gap-1">
-                      <label className="text-gray-400 text-[9px] font-black uppercase tracking-wider">📅 Pick-up Date</label>
-                      <div className="flex gap-2">
-                        <input 
-                          type="date"
-                          value={searchParams.date}
-                          onChange={(e) => setSearchParams({ ...searchParams, date: e.target.value })}
-                          min={new Date().toISOString().split('T')[0]}
-                          className="w-full text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-lg h-9 px-2 outline-none focus:border-[#F26A1B] transition-all"
-                          required
-                        />
-                        <input 
-                          type="text"
-                          placeholder="10:00 AM"
-                          value={searchParams.pickupTime || '10:00 AM'}
-                          onChange={(e) => setSearchParams({ ...searchParams, pickupTime: e.target.value })}
-                          className="w-[110px] text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-lg h-9 px-2 outline-none focus:border-[#F26A1B] transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-1">
-                      <label className="text-gray-400 text-[9px] font-black uppercase tracking-wider">📅 Return Date</label>
-                      <div className="flex gap-2">
-                        <input 
-                          type="date"
-                          value={searchParams.returnDate || ''}
-                          onChange={(e) => setSearchParams({ ...searchParams, returnDate: e.target.value })}
-                          className="w-full text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-lg h-9 px-2 outline-none focus:border-[#F26A1B] transition-all"
-                        />
-                        <input 
-                          type="text"
-                          placeholder="10:00 AM"
-                          className="w-[110px] text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-lg h-9 px-2 outline-none focus:border-[#F26A1B] transition-all"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Row 3: Driver Age, Passengers & Submit */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
-                    <div className="flex flex-col gap-1">
-                      <label className="text-gray-400 text-[9px] font-black uppercase tracking-wider">👤 Driver Age</label>
-                      <select 
-                        className="w-full text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-lg h-9 px-2 outline-none focus:border-[#F26A1B] transition-all"
-                      >
-                        <option>25+ years</option>
-                        <option>18-24 years</option>
-                      </select>
-                    </div>
-
-                    <div className="flex flex-col gap-1">
-                      <label className="text-gray-400 text-[9px] font-black uppercase tracking-wider">👥 Passengers</label>
-                      <select 
-                        className="w-full text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-lg h-9 px-2 outline-none focus:border-[#F26A1B] transition-all"
-                      >
-                        <option>1 Passenger</option>
-                        <option>2 Passengers</option>
-                        <option>3-4 Passengers</option>
-                        <option>5+ Passengers</option>
-                      </select>
-                    </div>
-
-                    <button 
-                      type="submit"
-                      className="w-full h-9 bg-[#F26A1B] hover:bg-[#d85513] text-white font-extrabold text-xs rounded-lg shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all uppercase tracking-wider"
-                    >
-                      Search Cars
-                    </button>
-                  </div>
-                </form>
-
-                {/* Card Footer props */}
-                <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-100 text-[10px] font-black text-gray-500">
-                  <span className="flex items-center gap-1">
-                    <span className="text-[#F26A1B]">✓</span> No Hidden Fees
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="text-[#F26A1B]">✓</span> Free Cancellation
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="text-[#F26A1B]">✓</span> 24/7 Support
-                  </span>
-                </div>
-              </div>
-
+            {/* Headline */}
+            <div style={{ marginBottom: '28px' }}>
+              <h1 style={{
+                fontSize: '3.2rem', fontWeight: 900, lineHeight: 1.1,
+                color: '#0B1B3D', margin: 0, letterSpacing: '-1.5px',
+                fontFamily: "'Outfit', sans-serif"
+              }}>
+                More Space.<br />
+                More Memories.
+              </h1>
+              <h1 style={{
+                fontSize: '3.4rem', fontWeight: 700, lineHeight: 1.1,
+                color: '#F26A1B', margin: '4px 0 0 0',
+                fontFamily: "'Caveat', cursive",
+                letterSpacing: '0px'
+              }}>
+                Better Together.
+              </h1>
+              <p style={{
+                color: '#475569', fontSize: '0.95rem', fontWeight: 500,
+                lineHeight: 1.65, marginTop: '14px', maxWidth: '400px'
+              }}>
+                Premium SUVs and family cars for comfortable journeys and unforgettable road trip experiences.
+              </p>
             </div>
 
-            {/* Right Column: Empty on desktop since background fills layout */}
-            <div className="hidden lg:block lg:col-span-6"></div>
+            {/* Booking Widget */}
+            <div style={{
+              background: '#ffffff',
+              borderRadius: '16px',
+              padding: '22px 22px 18px',
+              boxShadow: '0 20px 50px rgba(11,27,61,0.18)',
+              border: '1px solid #e2e8f0'
+            }}>
+              <h3 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#0B1B3D', marginBottom: '14px' }}>
+                Book Your Perfect Ride
+              </h3>
 
+              {/* Tabs */}
+              <div style={{ display: 'flex', gap: '6px', marginBottom: '16px', borderBottom: '1px solid #f0f0f0', paddingBottom: '12px' }}>
+                {tabs.map(tab => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      setSearchParams({ ...searchParams, tripType: tab.id });
+                    }}
+                    style={{
+                      padding: '6px 12px',
+                      borderRadius: '8px',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      border: activeTab === tab.id ? '1px solid #e2e8f0' : '1px solid transparent',
+                      background: activeTab === tab.id ? '#f8fafc' : 'transparent',
+                      color: activeTab === tab.id ? '#0B1B3D' : '#94a3b8',
+                      transition: 'all 0.15s',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Form */}
+              <form onSubmit={handleSearchSubmit}>
+                {/* Row 1: Locations */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                  <div>
+                    <label style={labelStyle}>📍 Pick-up Location</label>
+                    <select
+                      value={searchParams.fromCity}
+                      onChange={e => setSearchParams({ ...searchParams, fromCity: e.target.value })}
+                      style={inputStyle}
+                      required
+                    >
+                      <option value="">City, Airport, or Location</option>
+                      <option value="Pune, Maharashtra, India">Pune City</option>
+                      <option value="Mumbai, Maharashtra, India">Mumbai City</option>
+                      <option value="Mumbai Airport, Maharashtra, India">Mumbai Airport</option>
+                      <option value="Nashik, Maharashtra, India">Nashik City</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={labelStyle}>📍 Return Location</label>
+                    <select
+                      value={searchParams.toCity}
+                      onChange={e => setSearchParams({ ...searchParams, toCity: e.target.value })}
+                      style={inputStyle}
+                      required
+                    >
+                      <option value="">Same as pick-up</option>
+                      <option value="Mahabaleshwar, Maharashtra, India">Mahabaleshwar</option>
+                      <option value="Mumbai, Maharashtra, India">Mumbai City</option>
+                      <option value="Shirdi, Maharashtra, India">Shirdi Temple</option>
+                      <option value="Pune, Maharashtra, India">Pune City</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Row 2: Dates + times */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                  <div>
+                    <label style={labelStyle}>📅 Pick-up Date</label>
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      <input
+                        type="date"
+                        value={searchParams.date}
+                        min={new Date().toISOString().split('T')[0]}
+                        onChange={e => setSearchParams({ ...searchParams, date: e.target.value })}
+                        style={{ ...inputStyle, flex: 1 }}
+                        required
+                      />
+                      <select style={{ ...inputStyle, width: '90px', flex: 'none' }}>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>12:00 PM</option>
+                        <option>02:00 PM</option>
+                        <option>04:00 PM</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={labelStyle}>📅 Return Date</label>
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      <input
+                        type="date"
+                        value={searchParams.returnDate || ''}
+                        onChange={e => setSearchParams({ ...searchParams, returnDate: e.target.value })}
+                        style={{ ...inputStyle, flex: 1 }}
+                      />
+                      <select style={{ ...inputStyle, width: '90px', flex: 'none' }}>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>12:00 PM</option>
+                        <option>02:00 PM</option>
+                        <option>04:00 PM</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Row 3: Driver Age + Passengers + CTA */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '10px', alignItems: 'flex-end' }}>
+                  <div>
+                    <label style={labelStyle}>👤 Driver Age</label>
+                    <select style={inputStyle}>
+                      <option>25+ years</option>
+                      <option>18–24 years</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={labelStyle}>👥 Passengers</label>
+                    <select style={inputStyle}>
+                      <option>1 Passenger</option>
+                      <option>2 Passengers</option>
+                      <option>3–4 Passengers</option>
+                      <option>5+ Passengers</option>
+                    </select>
+                  </div>
+                  <button
+                    type="submit"
+                    style={{
+                      height: '36px',
+                      background: '#F26A1B',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontWeight: 800,
+                      fontSize: '0.8rem',
+                      cursor: 'pointer',
+                      padding: '0 20px',
+                      whiteSpace: 'nowrap',
+                      boxShadow: '0 4px 12px rgba(242,106,27,0.3)',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = '#d85513'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = '#F26A1B'; e.currentTarget.style.transform = 'none'; }}
+                  >
+                    Search Cars
+                  </button>
+                </div>
+
+                {/* Trust pills */}
+                <div style={{
+                  display: 'flex', justifyContent: 'space-between',
+                  marginTop: '14px', paddingTop: '12px',
+                  borderTop: '1px solid #f1f5f9',
+                  fontSize: '0.7rem', fontWeight: 700, color: '#64748b'
+                }}>
+                  <span><span style={{ color: '#F26A1B' }}>✓</span> No Hidden Fees</span>
+                  <span><span style={{ color: '#F26A1B' }}>✓</span> Free Cancellation</span>
+                  <span><span style={{ color: '#F26A1B' }}>✓</span> 24/7 Support</span>
+                </div>
+              </form>
+            </div>
           </div>
+
+          {/* Right column: spacer — the background image fills this area */}
+          <div style={{ flex: 1 }} />
         </div>
       </section>
 
-      {/* 3. DEEP NAVY BOTTOM TRUST BAR */}
-      <footer className="bg-[#0B1B3D] py-5 text-white z-20 relative border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-            
-            {/* Feature 1 */}
-            <div className="flex items-center gap-3">
-              <span className="text-2xl text-[#F26A1B] bg-white/5 w-11 h-11 rounded-full flex items-center justify-center">🚗</span>
-              <div className="flex flex-col">
-                <h4 className="text-xs font-black tracking-tight leading-tight">Wide Range of SUVs</h4>
-                <p className="text-[10px] text-gray-300 font-medium">Perfect for families & groups</p>
+      {/* ── TRUST BAR ───────────────────────────────────────── */}
+      <div style={{
+        background: '#0B1B3D',
+        borderTop: '3px solid #F26A1B',
+        padding: '22px 0',
+        width: '100%'
+      }}>
+        <div style={{
+          maxWidth: '1280px', margin: '0 auto',
+          padding: '0 28px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: '20px'
+        }}>
+          {trustFeatures.map((feat, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{
+                width: '44px', height: '44px', borderRadius: '50%',
+                background: 'rgba(255,255,255,0.07)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '1.3rem', flexShrink: 0
+              }}>
+                {feat.icon}
+              </div>
+              <div>
+                <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#ffffff', margin: 0, lineHeight: 1.2 }}>{feat.title}</h4>
+                <p style={{ fontSize: '0.68rem', color: '#94a3b8', margin: '2px 0 0', fontWeight: 500 }}>{feat.desc}</p>
               </div>
             </div>
-
-            {/* Feature 2 */}
-            <div className="flex items-center gap-3">
-              <span className="text-2xl text-[#F26A1B] bg-white/5 w-11 h-11 rounded-full flex items-center justify-center">💰</span>
-              <div className="flex flex-col">
-                <h4 className="text-xs font-black tracking-tight leading-tight">Best Price Guarantee</h4>
-                <p className="text-[10px] text-gray-300 font-medium">Competitive rates always</p>
-              </div>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="flex items-center gap-3">
-              <span className="text-2xl text-[#F26A1B] bg-white/5 w-11 h-11 rounded-full flex items-center justify-center">📅</span>
-              <div className="flex flex-col">
-                <h4 className="text-xs font-black tracking-tight leading-tight">Flexible Booking</h4>
-                <p className="text-[10px] text-gray-300 font-medium">Change or cancel anytime</p>
-              </div>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="flex items-center gap-3">
-              <span className="text-2xl text-[#F26A1B] bg-white/5 w-11 h-11 rounded-full flex items-center justify-center">📞</span>
-              <div className="flex flex-col">
-                <h4 className="text-xs font-black tracking-tight leading-tight">24/7 Customer Support</h4>
-                <p className="text-[10px] text-gray-300 font-medium">We're here to help</p>
-              </div>
-            </div>
-
-          </div>
+          ))}
         </div>
-      </footer>
+      </div>
 
     </div>
   );
 }
+
+// ── Shared style tokens ──────────────────────────────────
+const labelStyle = {
+  display: 'block',
+  fontSize: '0.65rem',
+  fontWeight: 800,
+  color: '#94a3b8',
+  textTransform: 'uppercase',
+  letterSpacing: '0.6px',
+  marginBottom: '4px'
+};
+
+const inputStyle = {
+  width: '100%',
+  height: '36px',
+  fontSize: '0.78rem',
+  fontWeight: 600,
+  color: '#1e293b',
+  background: '#f8fafc',
+  border: '1px solid #e2e8f0',
+  borderRadius: '8px',
+  padding: '0 10px',
+  outline: 'none',
+  cursor: 'pointer',
+  transition: 'border-color 0.15s'
+};

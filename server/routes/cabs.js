@@ -72,4 +72,40 @@ router.post('/estimate', async (req, res) => {
   }
 });
 
+// @route   PUT api/cabs/price/:id
+// @desc    Update cab price_per_km (Admin)
+router.put('/price/:id', async (req, res) => {
+  const cabId = req.params.id;
+  const { price_per_km } = req.body;
+  try {
+    const result = await db.query(
+      'UPDATE cabs SET price_per_km = $1 WHERE id = $2 RETURNING *',
+      [price_per_km, cabId]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Cab not found' });
+    }
+    res.json({ message: 'Cab pricing updated successfully', cab: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error updating cab pricing' });
+  }
+});
+
+// @route   POST api/cabs
+// @desc    Add a new cab to the fleet (Admin)
+router.post('/', async (req, res) => {
+  const { type, name, price_per_km, seating_capacity, image_url } = req.body;
+  try {
+    const result = await db.query(
+      'INSERT INTO cabs (type, name, price_per_km, seating_capacity, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [type, name, price_per_km, seating_capacity, image_url || 'hatchback.png']
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error adding new cab' });
+  }
+});
+
 module.exports = router;

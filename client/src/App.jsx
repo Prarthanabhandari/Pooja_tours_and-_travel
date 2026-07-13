@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 // Import Modular Components
 import Header from './components/Header';
-import RoadNestLanding from './components/RoadNestLanding';
+import PoojaLanding from './components/PoojaLanding';
 import WhyChooseUs from './components/WhyChooseUs';
 import PopularPackages from './components/PopularPackages';
 import HowItWorks from './components/HowItWorks';
@@ -10,7 +10,6 @@ import FleetSection from './components/FleetSection';
 import Footer from './components/Footer';
 import Reviews from './components/Reviews';
 import FAQs from './components/FAQs';
-import GetApp from './components/GetApp';
 
 // API Base URL - points to our Express server
 const API_URL = 'http://localhost:5000/api';
@@ -353,7 +352,7 @@ export default function App() {
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
       {/* HEADER SECTION */}
-      {currentPage !== 'home' && (
+      {currentPage !== 'home' && currentPage !== 'admin' && (
         <Header 
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
@@ -369,8 +368,9 @@ export default function App() {
         
         {/* PAGE: HOME */}
         {currentPage === 'home' && (
-          <div className="animate-fade" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-            <RoadNestLanding 
+          <div className="animate-fade" style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', width: '100%' }}>
+            <PoojaLanding 
+              currentPage={currentPage}
               searchParams={searchParams}
               setSearchParams={setSearchParams}
               handleSearchSubmit={handleSearchSubmit}
@@ -392,7 +392,6 @@ export default function App() {
             <HowItWorks />
             <Reviews />
             <FAQs />
-            <GetApp />
           </div>
         )}
 

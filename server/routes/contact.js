@@ -27,4 +27,16 @@ router.post('/', async (req, res) => {
   }
 });
 
+// @route   GET api/contact
+// @desc    Retrieve all contact inquiries (Admin)
+router.get('/', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM contact_messages ORDER BY created_at DESC', []);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error retrieving contact inquiries' });
+  }
+});
+
 module.exports = router;

@@ -18,9 +18,9 @@ export default function SearchConsole({
       {/* Search Type Tabs */}
       <div style={{ display: 'flex', gap: '6px', borderBottom: '1px solid #e2e8f0', pb: '12px', marginBottom: '16px' }}>
         {[
-          { id: 'roundtrip', label: '🔄 Pick-up & Return' },
-          { id: 'oneway', label: '➡️ One Way' },
-          { id: 'local', label: '⏱️ Hourly Rental' }
+          { id: 'roundtrip', label: 'Pick-up & Return' },
+          { id: 'oneway', label: 'One Way' },
+          { id: 'local', label: 'Hourly Rental' }
         ].map(tab => {
           const isActive = searchParams.tripType === tab.id;
           return (
@@ -182,7 +182,7 @@ export default function SearchConsole({
             e.target.style.transform = 'none';
           }}
         >
-          🔍 Search Cars
+          Search Cars
         </button>
       </form>
 

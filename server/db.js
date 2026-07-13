@@ -22,7 +22,8 @@ const initializeMockDb = () => {
   if (!fs.existsSync(mockDbPath)) {
     const initialData = {
       users: [
-        { id: 1, name: "Test User", email: "test@example.com", password: "password123", phone: "9876543210", role: "user" }
+        { id: 1, name: "Test User", email: "test@example.com", password: "password123", phone: "9876543210", role: "user" },
+        { id: 2, name: "Pooja Admin", email: "admin@example.com", password: "adminpassword", phone: "9999999999", role: "admin" }
       ],
       cabs: [
         { id: 1, type: "Hatchback", name: "Maruti Suzuki WagonR", price_per_km: 11.00, seating_capacity: 4, image_url: "hatchback.png" },
@@ -174,12 +175,11 @@ const handleMockQuery = (text, params = []) => {
   }
 
   if (normalizedText.includes('update bookings set status = $1 where id = $2') || normalizedText.includes('status = \'cancelled\'')) {
-    // Cancellation
-    // UPDATE bookings SET status = 'cancelled' WHERE id = $1 RETURNING *
+    const statusVal = params[1] ? params[0] : 'cancelled';
     const bookingId = params[1] || params[0];
     const index = data.bookings.findIndex(b => b.id === parseInt(bookingId));
     if (index !== -1) {
-      data.bookings[index].status = 'cancelled';
+      data.bookings[index].status = statusVal;
       saveMockData(data);
       return { rows: [data.bookings[index]] };
     }
@@ -199,6 +199,75 @@ const handleMockQuery = (text, params = []) => {
     data.contact_messages.push(newMessage);
     saveMockData(data);
     return { rows: [newMessage] };
+  }
+
+  // 6. Get all contact messages
+  if (normalizedText.includes('select * from contact_messages')) {
+    return { rows: data.contact_messages || [] };
+  }
+
+  // 7. Get all users
+  if (normalizedText.includes('select * from users') && !normalizedText.includes('email = $1')) {
+    return { rows: data.users || [] };
+  }
+
+  // 8. Update Cab Price
+  if (normalizedText.includes('update cabs set price_per_km = $1 where id = $2')) {
+    const priceVal = parseFloat(params[0]);
+    const cabId = parseInt(params[1]);
+    const index = data.cabs.findIndex(c => c.id === cabId);
+    if (index !== -1) {
+      data.cabs[index].price_per_km = priceVal;
+      saveMockData(data);
+      return { rows: [data.cabs[index]] };
+    }
+    return { rows: [] };
+  }
+
+  // 9. Update Bus Price
+  if (normalizedText.includes('update buses set price_per_seat = $1 where id = $2')) {
+    const priceVal = parseFloat(params[0]);
+    const busId = parseInt(params[1]);
+    const index = data.buses.findIndex(b => b.id === busId);
+    if (index !== -1) {
+      data.buses[index].price_per_seat = priceVal;
+      saveMockData(data);
+      return { rows: [data.buses[index]] };
+    }
+    return { rows: [] };
+  }
+
+  // 10. Add New Cab
+  if (normalizedText.includes('insert into cabs')) {
+    const newCab = {
+      id: data.cabs.length + 1,
+      type: params[0],
+      name: params[1],
+      price_per_km: parseFloat(params[2]),
+      seating_capacity: parseInt(params[3]),
+      image_url: params[4] || 'hatchback.png'
+    };
+    data.cabs.push(newCab);
+    saveMockData(data);
+    return { rows: [newCab] };
+  }
+
+  // 11. Add New Bus
+  if (normalizedText.includes('insert into buses')) {
+    const newBus = {
+      id: data.buses.length + 1,
+      name: params[0],
+      type: params[1],
+      total_seats: parseInt(params[2]),
+      price_per_seat: parseFloat(params[3]),
+      departure_time: params[4],
+      arrival_time: params[5],
+      route_from: params[6],
+      route_to: params[7]
+    };
+    data.buses.push(newBus);
+    saveMockData(data);
+    return { rows: [newBus] };
   }
 
   return { rows: [] };

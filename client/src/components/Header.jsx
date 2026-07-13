@@ -11,7 +11,7 @@ export default function Header({
   return (
     <header style={{ background: '#ffffff', borderBottom: '1px solid #e2e8f0', width: '100%', position: 'sticky', top: 0, zIndex: 100 }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 20px' }}>
-        {/* Logo block */}
+        {/* Logo block (Restored original style, but with Red 'P' as requested) */}
         <div 
           onClick={() => {
             setCurrentPage('home');
@@ -39,22 +39,22 @@ export default function Header({
             </svg>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0b1329', letterSpacing: '-0.5px', margin: 0, display: 'flex', alignItems: 'center', gap: '2px' }}>
-              POOJA <span style={{ color: '#f97316', fontWeight: 700 }}>TRAVELS</span>
+            <h1 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0b1329', letterSpacing: '-0.5px', margin: 0, display: 'flex', alignItems: 'center', gap: '2px', textTransform: 'uppercase' }}>
+              <span style={{ color: '#d90429', fontWeight: 900 }}>P</span>OOJA <span style={{ color: '#f97316', fontWeight: 700 }}>TRAVELS</span>
             </h1>
             <span style={{ fontSize: '0.62rem', color: '#64748b', letterSpacing: '3px', fontWeight: 700, marginTop: '-2px', textTransform: 'uppercase' }}>Since 2018</span>
           </div>
         </div>
 
-        {/* Menu Navigation links */}
+        {/* Menu Navigation links (Navbar items made darker and slightly larger to match styling edits) */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: '22px' }}>
-          <button onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: currentPage === 'home' ? '#f97316' : '#0b1329', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}>Home</button>
-          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('fleet-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#0b1329', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}>Our Fleet</button>
-          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('packages-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#0b1329', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}>Packages</button>
-          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('why-us-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#0b1329', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}>Why Us</button>
-          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#0b1329', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}>Reviews</button>
-          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('faqs-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#0b1329', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}>FAQs</button>
-          <button onClick={() => { setCurrentPage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: currentPage === 'contact' ? '#f97316' : '#0b1329', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}>Contact Us</button>
+          <button onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: currentPage === 'home' ? '#f97316' : '#1e293b', fontWeight: 800, fontSize: '0.92rem', cursor: 'pointer', textTransform: 'uppercase' }}>Home</button>
+          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('fleet-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#1e293b', fontWeight: 800, fontSize: '0.92rem', cursor: 'pointer', textTransform: 'uppercase' }}>Our Fleet</button>
+          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('packages-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#1e293b', fontWeight: 800, fontSize: '0.92rem', cursor: 'pointer', textTransform: 'uppercase' }}>Packages</button>
+          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('why-us-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#1e293b', fontWeight: 800, fontSize: '0.92rem', cursor: 'pointer', textTransform: 'uppercase' }}>Why Us</button>
+          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#1e293b', fontWeight: 800, fontSize: '0.92rem', cursor: 'pointer', textTransform: 'uppercase' }}>Reviews</button>
+          <button onClick={() => { setCurrentPage('home'); setTimeout(() => document.getElementById('faqs-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} style={{ color: '#1e293b', fontWeight: 800, fontSize: '0.92rem', cursor: 'pointer', textTransform: 'uppercase' }}>FAQs</button>
+          <button onClick={() => { setCurrentPage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: currentPage === 'contact' ? '#f97316' : '#1e293b', fontWeight: 800, fontSize: '0.92rem', cursor: 'pointer', textTransform: 'uppercase' }}>Contact Us</button>
         </nav>
 
         {/* Hotline block & Login button */}

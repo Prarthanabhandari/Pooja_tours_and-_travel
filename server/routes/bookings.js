@@ -107,6 +107,7 @@ router.get('/', async (req, res) => {
 });
 
 // @route   PUT api/bookings/cancel/:id
+// @route   PUT api/bookings/cancel/:id
 // @desc    Cancel an existing booking
 router.put('/cancel/:id', async (req, res) => {
   const bookingId = req.params.id;
@@ -124,6 +125,28 @@ router.put('/cancel/:id', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error cancelling booking' });
+  }
+});
+
+// @route   PUT api/bookings/status/:id
+// @desc    Update status of booking (Admin)
+router.put('/status/:id', async (req, res) => {
+  const bookingId = req.params.id;
+  const { status } = req.body;
+  try {
+    const result = await db.query(
+      `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING *`,
+      [status, bookingId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.json({ message: 'Booking status updated successfully', booking: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error updating booking status' });
   }
 });
 

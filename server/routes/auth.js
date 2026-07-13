@@ -76,8 +76,27 @@ router.post('/login', async (req, res) => {
       }
     });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   GET api/auth/users
+// @desc    Get all users (Admin)
+router.get('/users', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM users ORDER BY created_at DESC', []);
+    const users = result.rows.map(u => ({
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      phone: u.phone,
+      role: u.role,
+      created_at: u.created_at
+    }));
+    res.json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error retrieving users' });
   }
 });
 

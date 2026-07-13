@@ -3,81 +3,98 @@ import React from 'react';
 export default function Reviews() {
   const customerReviews = [
     {
-      name: 'James R.',
-      location: 'New York, USA',
-      text: '"Excellent service! The SUV was perfect for our family road trip. Clean, comfortable, and spacious."',
+      name: 'Rajesh M.',
+      location: 'Kothrud, Pune',
+      text: '"Booked an Innova Crysta for our family trip to Shirdi Sai Darshan. The car was spotless, driver was extremely polite and arrived 10 minutes early. Excellent experience!"',
       rating: 5,
-      avatar: '👨'
+      initials: 'RM',
+      colorClass: 'bg-rose-500/10 text-rose-600'
     },
     {
-      name: 'Priya S.',
-      location: 'Toronto, Canada',
-      text: '"Booking was easy and the staff was super helpful. Highly recommended!"',
+      name: 'Sneha P.',
+      location: 'Andheri, Mumbai',
+      text: '"Rented a 17-seat Tempo Traveller for Lonavala corporate outing. The seats were very comfortable, AC worked perfectly, and the driver knew the route like back of his hand."',
       rating: 5,
-      avatar: '👩'
+      initials: 'SP',
+      colorClass: 'bg-indigo-500/10 text-indigo-600'
     },
     {
-      name: 'Amit K.',
-      location: 'New Jersey, USA',
-      text: '"Traveled with kids and had a great experience. The car was in top condition."',
+      name: 'Aditya K.',
+      location: 'Thane, West',
+      text: '"Regularly book their Swift and Ertiga for Mumbai Airport drops. They have fixed pricing, no hidden tolls, and absolute punctuality. Best cab service in Pune-Mumbai route."',
       rating: 5,
-      avatar: '👨'
+      initials: 'AK',
+      colorClass: 'bg-amber-500/10 text-amber-600'
     },
     {
-      name: 'Sophia L.',
-      location: 'London, UK',
-      text: '"Best rental experience ever! Will definitely choose RoadNest/Pooja Travels again."',
+      name: 'Priyanka G.',
+      location: 'Pimple Saudagar, Pune',
+      text: '"Organized a family yatra for Ashtavinayak Darshan. The 50-seater luxury bus was in top condition, pushing seats were comfortable for elders. Highly recommended!"',
       rating: 5,
-      avatar: '👩'
+      initials: 'PG',
+      colorClass: 'bg-emerald-500/10 text-emerald-600'
     }
   ];
 
   return (
-    <div id="reviews-section" style={{ background: '#ffffff', padding: '60px 0', borderTop: '1px solid #e2e8f0', width: '100%' }}>
-      <div className="container">
-        <h2 style={{ textAlign: 'center', fontSize: '2.2rem', fontWeight: 800, color: '#0b1329', marginBottom: '6px' }}>
-          What Our Customers Say
-        </h2>
-        <p style={{ color: '#64748b', textAlign: 'center', marginBottom: '40px', fontSize: '0.95rem' }}>
-          Real feedback from our happy travelers.
-        </p>
+    <section id="reviews-section" className="pt-12 pb-24 bg-white w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[0.7rem] font-black bg-[#00b4d8]/10 text-[#00b4d8] uppercase tracking-wider mb-4">
+            Testimonials
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0f172a] tracking-tight mb-4">
+            What Our Customers Say
+          </h2>
+          <div className="w-16 h-1 bg-[#00b4d8] mx-auto rounded-full mb-5" />
+          <p className="text-slate-500 text-sm sm:text-base font-semibold leading-relaxed">
+            Real feedback from our happy travelers.
+          </p>
+        </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+        {/* Reviews Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {customerReviews.map((rev, idx) => (
             <div 
               key={idx}
-              style={{
-                background: '#f8fafc',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '24px',
-                position: 'relative',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}
+              className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-[0_4px_25px_rgba(15,23,42,0.01)] hover:shadow-xl hover:border-slate-300/80 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div style={{ color: '#fbbf24', fontSize: '0.9rem', marginBottom: '12px' }}>
-                  {Array.from({ length: rev.rating }).map((_, i) => '★').join('')}
+                {/* Star Ratings */}
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: rev.rating }).map((_, i) => (
+                    <svg key={i} className="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                  ))}
                 </div>
-                <p style={{ fontSize: '0.86rem', color: '#475569', lineHeight: '1.6', fontStyle: 'italic', margin: '0 0 20px 0' }}>
+                {/* Review Text */}
+                <p className="text-xs text-slate-600 leading-relaxed font-semibold italic mb-6">
                   {rev.text}
                 </p>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', borderTop: '1px solid #e2e8f0', paddingTop: '12px' }}>
-                <span style={{ fontSize: '1.4rem', background: '#e2e8f0', width: '38px', height: '38px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {rev.avatar}
-                </span>
+              
+              {/* Reviewer Details */}
+              <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm tracking-wide ${rev.colorClass}`}>
+                  {rev.initials}
+                </div>
                 <div>
-                  <h4 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#0b1329', margin: 0 }}>{rev.name}</h4>
-                  <span style={{ fontSize: '0.72rem', color: '#64748b' }}>{rev.location}</span>
+                  <h4 className="text-xs font-black text-slate-800 leading-none mb-1">
+                    {rev.name}
+                  </h4>
+                  <span className="text-[0.7rem] font-bold text-slate-400">
+                    {rev.location}
+                  </span>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
       </div>
-    </div>
+    </section>
   );
 }
