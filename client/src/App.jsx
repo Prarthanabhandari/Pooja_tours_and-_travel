@@ -10,6 +10,13 @@ import FleetSection from './components/FleetSection';
 import Footer from './components/Footer';
 import Reviews from './components/Reviews';
 import FAQs from './components/FAQs';
+import AboutUs from './components/AboutUs';
+import PackagesPage from './components/PackagesPage';
+import GalleryPage from './components/GalleryPage';
+import TestimonialsPage from './components/TestimonialsPage';
+import BlogPage from './components/BlogPage';
+import AuthModal from './components/AuthModal';
+import HeaderBreadcrumbs from './components/HeaderBreadcrumbs';
 
 // API Base URL - points to our Express server
 const API_URL = 'http://localhost:5000/api';
@@ -351,20 +358,108 @@ export default function App() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
-      {/* HEADER SECTION */}
-      {currentPage !== 'home' && currentPage !== 'admin' && (
-        <Header 
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          currentUser={currentUser}
-          handleLogout={handleLogout}
-          setShowAuthModal={setShowAuthModal}
-          setAuthMode={setAuthMode}
-        />
+      {/* GLOBAL HEADER SECTION */}
+      {currentPage !== 'admin' && (
+        <header className="bg-white lg:bg-gradient-to-r lg:from-white lg:from-[50%] lg:to-[#f4f3ed] lg:to-[50%] border-b border-gray-100 fixed top-0 left-0 right-0 z-50 shadow-sm h-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
+            
+            {/* Logo block */}
+            <div 
+              onClick={() => {
+                setCurrentPage('home');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="flex items-center gap-3 cursor-pointer group"
+            >
+              <img 
+                src="/pooja-logo-clean.png" 
+                alt="Pooja Tours & Travels" 
+                className="h-12 w-auto object-contain group-hover:scale-105 transition-all"
+              />
+              <div className="flex flex-col justify-center">
+                <span className="text-[#0a2540] text-[13.5px] sm:text-[14.5px] font-black tracking-tight leading-none uppercase">
+                  <span className="text-[#d90429] text-[17px] sm:text-[19px] font-black">P</span>OOJA TOURS & TRAVELS
+                </span>
+              </div>
+            </div>
+
+            {/* Navigation Links */}
+            <nav className="hidden md:flex items-center gap-4 lg:gap-5">
+              <button 
+                onClick={() => {
+                  setCurrentPage('home');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`font-black text-xs uppercase tracking-wider transition-colors ${currentPage === 'home' ? 'text-[#00b4d8]' : 'text-slate-800 hover:text-[#00b4d8]'}`}
+              >
+                Home
+              </button>
+              {['Tours', 'Gallery', 'About Us', 'Blog', 'Contact Us'].map((link) => {
+                const targetPage = 
+                  link === 'Tours' ? 'packages' :
+                  link === 'Gallery' ? 'gallery' :
+                  link === 'About Us' ? 'about' :
+                  link === 'Blog' ? 'blog' : 'contact';
+                
+                const isActive = currentPage === targetPage;
+                
+                return (
+                  <button
+                    key={link}
+                    onClick={() => {
+                      setCurrentPage(targetPage);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className={`font-extrabold text-xs uppercase tracking-wider transition-colors ${isActive ? 'text-[#00b4d8]' : 'text-slate-800 hover:text-[#00b4d8]'}`}
+                  >
+                    {link}
+                  </button>
+                );
+              })}
+              
+              {/* Admin or Login */}
+              {currentUser ? (
+                currentUser.role === 'admin' ? (
+                  <button 
+                    onClick={() => setCurrentPage('admin')}
+                    className="text-slate-800 hover:text-[#00b4d8] font-black text-xs uppercase tracking-wider"
+                  >
+                    Admin Panel
+                  </button>
+                ) : (
+                  <button 
+                    onClick={() => setCurrentPage('dashboard')}
+                    className="text-slate-805 hover:text-[#00b4d8] font-black text-xs uppercase tracking-wider"
+                  >
+                    Profile
+                  </button>
+                )
+              ) : (
+                <button 
+                  onClick={() => { setAuthMode('login'); setShowAuthModal(true); }}
+                  className="text-slate-800 hover:text-[#00b4d8] font-extrabold text-xs uppercase tracking-wider"
+                >
+                  Login
+                </button>
+              )}
+              
+              {/* Review Button */}
+              <button
+                onClick={() => {
+                  setCurrentPage('testimonials');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="bg-[#4f46e5] text-white font-bold text-[11px] px-3.5 py-2 rounded-lg hover:bg-indigo-600 transition-all shadow-sm uppercase tracking-wider"
+              >
+                Review
+              </button>
+            </nav>
+          </div>
+        </header>
       )}
 
       {/* DYNAMIC PAGES CONTAINER */}
-      <main style={{ flex: 1, paddingBottom: '60px' }}>
+      <main style={{ flex: 1, paddingBottom: '60px', paddingTop: currentPage !== 'admin' ? '64px' : '0px' }}>
         
         {/* PAGE: HOME */}
         {currentPage === 'home' && (
@@ -397,246 +492,197 @@ export default function App() {
 
         {/* PAGE: ABOUT US */}
         {currentPage === 'about' && (
-          <div className="container animate-fade" style={{ paddingTop: '50px' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '20px', textAlign: 'center' }}>About <span style={{ color: 'var(--primary)' }}>Pooja Tours & Travels</span></h2>
-            <p style={{ color: 'var(--text-muted)', textAlign: 'center', maxWidth: '700px', margin: '0 auto 40px auto', lineHeight: '1.6' }}>
-              Established with a goal to offer the safest, most reliable outstation taxi and bus rentals in Maharashtra. Our clients love our clean cars and professional driver standards.
-            </p>
-            <div className="grid-cols-2">
-              <div className="glass-panel">
-                <h3 style={{ color: 'var(--primary)', marginBottom: '15px' }}>Our Mission</h3>
-                <p style={{ color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '20px' }}>
-                  We aim to redefine travel comfort. Whether you are traveling for a spiritual visit to Shirdi, catching a flight at Mumbai Airport, or organizing a family group tour in our traveler buses, we guarantee a punctual, stress-free trip.
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                  <div style={{ borderLeft: '3px solid var(--primary)', paddingLeft: '12px' }}>
-                    <h4 style={{ fontSize: '1.8rem', color: 'var(--text-main)' }}>12+</h4>
-                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Years Experience</p>
-                  </div>
-                  <div style={{ borderLeft: '3px solid var(--primary)', paddingLeft: '12px' }}>
-                    <h4 style={{ fontSize: '1.8rem', color: 'var(--text-main)' }}>15,000+</h4>
-                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Happy Clients</p>
-                  </div>
-                </div>
-              </div>
-              <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(0, 242, 254, 0.05), rgba(79, 172, 254, 0.05))' }}>
-                <h3 style={{ marginBottom: '12px' }}>Our Core Standards</h3>
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', color: 'var(--text-muted)' }}>
-                  <li>✅ Vetted Drivers with excellent route knowledge</li>
-                  <li>✅ Regularly sanitized, fully air-conditioned vehicles</li>
-                  <li>✅ Instant booking confirmations & digital receipts</li>
-                  <li>✅ 24/7 client helpline for emergency support</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <AboutUs setCurrentPage={setCurrentPage} />
         )}
 
         {/* PAGE: PACKAGES */}
         {currentPage === 'packages' && (
-          <div className="container animate-fade" style={{ paddingTop: '50px' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '20px', textAlign: 'center' }}>Popular Outstation <span style={{ color: 'var(--primary)' }}>Tour Packages</span></h2>
-            <p style={{ color: 'var(--text-muted)', textAlign: 'center', marginBottom: '40px' }}>Select from our highly requested fixed packages with special discounts.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '30px' }}>
-              {POPULAR_PACKAGES.map(p => (
-                <div key={p.id} className="glass-panel" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div>
-                    <span style={{ fontSize: '3rem', display: 'block', marginBottom: '12px' }}>{p.image}</span>
-                    <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 700 }}>{p.type}</span>
-                    <h3 style={{ fontSize: '1.25rem', marginTop: '6px', marginBottom: '10px' }}>{p.title}</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.5', marginBottom: '20px' }}>{p.desc}</p>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-light)', paddingTop: '15px' }}>
-                    <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)' }}>{p.price}</span>
-                    <button 
-                      onClick={() => {
-                        setSearchParams({
-                          ...searchParams,
-                          fromCity: 'Pune, Maharashtra, India',
-                          toCity: p.title.includes('Shirdi') ? 'Shirdi, Maharashtra, India' : p.title.includes('Mahabaleshwar') ? 'Mahabaleshwar, Maharashtra, India' : 'Mumbai Airport, Maharashtra, India'
-                        });
-                        setCurrentPage('home');
-                        setTimeout(() => document.getElementById('search-panel')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                      }} 
-                      className="btn-primary" 
-                      style={{ padding: '6px 12px', fontSize: '0.8rem' }}
-                    >
-                      Book Now
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <PackagesPage 
+            setCurrentPage={setCurrentPage} 
+            searchParams={searchParams} 
+            setSearchParams={setSearchParams} 
+          />
         )}
 
         {/* PAGE: GALLERY */}
         {currentPage === 'gallery' && (
-          <div className="container animate-fade" style={{ paddingTop: '50px' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '15px', textAlign: 'center' }}>Explore <span style={{ color: 'var(--primary)' }}>Our Actual Fleet</span></h2>
-            <p style={{ color: 'var(--text-muted)', textAlign: 'center', marginBottom: '45px' }}>Photos of our premium Force Traveller coaches and cabs, ready for your next journey.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '30px' }}>
-              {[
-                { id: 1, name: 'Pooja Luxury Force Traveller (17-Seater)', type: '17-Seater AC Luxury Coach', image_url: '/bus_fleet.jpg', desc: 'Our complete fleet of three matching luxury coaches, fully equipped with individual AC vents and reclining seats.' },
-                { id: 2, name: 'Krishiv Travels Coach (Side Profile)', type: '17-Seater AC Luxury Coach', image_url: '/bus_side.jpg', desc: 'Comfortable outstation drops and airport runs. Regular sanitization and luggage carrier attached.' },
-                { id: 3, name: 'Krishiv Travels Coach (Front Angle)', type: '17-Seater AC Luxury Coach', image_url: '/bus_front.jpg', desc: 'Premium LED headlamps and absolute safety tracking systems installed for family tours.' },
-                { id: 4, name: 'Krishiv Travels Coach (Scenic Tour)', type: '17-Seater AC Luxury Coach', image_url: '/bus_tree.jpg', desc: 'Ready for spiritual yatras to Shirdi or weekend excursions in Mahabaleshwar.' }
-              ].map(fleetItem => (
-                <div key={fleetItem.id} className="glass-panel" style={{ display: 'flex', flexDirection: 'column', padding: '16px', overflow: 'hidden' }}>
-                  <img 
-                    src={fleetItem.image_url} 
-                    alt={fleetItem.name} 
-                    style={{ 
-                      width: '100%', 
-                      height: '200px', 
-                      objectFit: 'cover', 
-                      borderRadius: '8px', 
-                      marginBottom: '16px',
-                      border: '1px solid var(--border-light)'
-                    }} 
-                  />
-                  <span style={{
-                    alignSelf: 'flex-start',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    background: 'rgba(37, 99, 235, 0.08)',
-                    fontSize: '0.75rem',
-                    color: 'var(--primary)',
-                    fontWeight: 700,
-                    marginBottom: '10px'
-                  }}>{fleetItem.type}</span>
-                  <h3 style={{ fontSize: '1.2rem', marginBottom: '8px' }}>{fleetItem.name}</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: '1.5', flex: 1, marginBottom: '16px' }}>{fleetItem.desc}</p>
-                  
-                  <button 
-                    onClick={() => {
-                      setSearchParams({
-                        ...searchParams,
-                        bookingType: 'bus'
-                      });
-                      setCurrentPage('home');
-                      setTimeout(() => document.getElementById('search-panel')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                    }}
-                    className="btn-primary" 
-                    style={{ width: '100%', justifyContent: 'center', padding: '10px 0', fontSize: '0.85rem' }}
-                  >
-                    Request Booking Enquiry
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
+          <GalleryPage setCurrentPage={setCurrentPage} />
         )}
 
         {/* PAGE: TESTIMONIALS */}
         {currentPage === 'testimonials' && (
-          <div className="container animate-fade" style={{ paddingTop: '50px', maxWidth: '800px' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '40px', textAlign: 'center' }}>Reviews from <span style={{ color: 'var(--primary)' }}>Our Travelers</span></h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-              {[
-                { name: 'Amit Sharma', role: 'Outstation Traveler', text: 'We booked the Toyota Innova for our Shirdi family trip. The driver was extremely professional and polite, and the car was clean. Highly recommended service!' },
-                { name: 'Priya Patel', role: 'Regular Airport Dropper', text: 'Pooja Travels is my go-to for Mumbai airport drop-offs. Always on time, clean sedans, and peaceful driving. A+' },
-                { name: 'Rajesh Shinde', role: 'Group Tour Organizer', text: 'Rented their 17-seater traveler bus for a corporate trip to Mahabaleshwar. Extremely smooth booking process and comfortable seating.' }
-              ].map((t, idx) => (
-                <div key={idx} className="glass-panel" style={{ position: 'relative' }}>
-                  <span style={{ fontSize: '4rem', color: 'rgba(0, 242, 254, 0.1)', position: 'absolute', top: '10px', left: '20px', pointerEvents: 'none' }}>“</span>
-                  <p style={{ fontSize: '1.05rem', lineHeight: '1.6', marginBottom: '15px', position: 'relative', zIndex: 1, paddingLeft: '20px' }}>{t.text}</p>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '20px' }}>
-                    <div>
-                      <h4 style={{ fontSize: '1rem', color: 'var(--primary)' }}>{t.name}</h4>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t.role}</p>
-                    </div>
-                    <span style={{ color: 'var(--warning)' }}>⭐⭐⭐⭐⭐</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <TestimonialsPage setCurrentPage={setCurrentPage} />
+        )}
+
+        {/* PAGE: BLOG */}
+        {currentPage === 'blog' && (
+          <BlogPage setCurrentPage={setCurrentPage} />
         )}
 
         {/* PAGE: CONTACT US */}
         {currentPage === 'contact' && (
-          <div className="container animate-fade" style={{ paddingTop: '50px' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '40px', textAlign: 'center' }}>Get In <span style={{ color: 'var(--primary)' }}>Touch</span></h2>
-            <div className="grid-cols-2">
-              <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div className="relative bg-slate-50/30 overflow-hidden w-full flex-1 flex flex-col" style={{ minHeight: '80vh' }}>
+            
+            {/* Background Watermark Pattern Layer */}
+            <div 
+              className="absolute inset-0 z-0 opacity-[0.06] pointer-events-none"
+              style={{ 
+                backgroundImage: `url('/travel-watermark-clean.png')`,
+                backgroundRepeat: 'repeat',
+                backgroundSize: '400px 400px'
+              }}
+            />
+            <div className="absolute top-[10%] left-[-15%] w-[450px] h-[450px] rounded-full bg-cyan-200/20 blur-3xl z-0 pointer-events-none" />
+            <div className="absolute bottom-[10%] right-[-15%] w-[450px] h-[450px] rounded-full bg-amber-100/20 blur-3xl z-0 pointer-events-none" />
+
+            {/* Breadcrumbs Header */}
+            <HeaderBreadcrumbs title="Contact Us" setCurrentPage={setCurrentPage} />
+
+            {/* Main Content Area */}
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              
+              {/* Left Column: Office details */}
+              <div className="lg:col-span-5 bg-white/65 backdrop-blur-md border border-white/60 rounded-3xl p-6 sm:p-8 shadow-sm space-y-8">
                 <div>
-                  <h3 style={{ color: 'var(--primary)', marginBottom: '10px' }}>Our Office</h3>
-                  <p style={{ color: 'var(--text-muted)', lineHeight: '1.6' }}>
-                    Pooja Tours and Travels<br />
-                    Tingre Nagar, Vishrantwadi,<br />
-                    Pune, Maharashtra - 411015
-                  </p>
+                  <span className="text-[0.65rem] font-black text-[#00b4d8] uppercase tracking-wider">Pooja Travels Office</span>
+                  <h3 className="text-lg font-black text-slate-800 mt-1">Our Location</h3>
+                  <div className="flex gap-3.5 mt-4 items-start">
+                    <div className="w-9 h-9 rounded-xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-[#00b4d8] shrink-0">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                      </svg>
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-slate-650 leading-relaxed">
+                      Tingre Nagar, Vishrantwadi,<br />
+                      Pune, Maharashtra - 411015
+                    </p>
+                  </div>
                 </div>
+
                 <div>
-                  <h3 style={{ color: 'var(--primary)', marginBottom: '10px' }}>Direct Hotlines</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: 600 }}>📞 +91 73871 29287 / +91 96233 24139</p>
-                  <p style={{ color: 'var(--text-muted)' }}>✉️ booking@poojatravels.com</p>
+                  <span className="text-[0.65rem] font-black text-[#00b4d8] uppercase tracking-wider">Direct Hotline Numbers</span>
+                  <h3 className="text-lg font-black text-slate-800 mt-1">Call Us Anytime</h3>
+                  <div className="flex gap-3.5 mt-4 items-start">
+                    <div className="w-9 h-9 rounded-xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-[#00b4d8] shrink-0">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.824-1.802-5.14-4.118-6.944-6.94l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                      </svg>
+                    </div>
+                    <div className="flex flex-col text-xs sm:text-sm font-semibold text-slate-750">
+                      <a href="tel:+917387129287" className="hover:text-[#00b4d8] transition-colors">+91 73871 29287</a>
+                      <a href="tel:+919623324139" className="hover:text-[#00b4d8] transition-colors mt-1">+91 96233 24139</a>
+                      <span className="text-[0.62rem] font-bold text-slate-450 mt-1">booking@poojatravels.com</span>
+                    </div>
+                  </div>
                 </div>
+
                 <div>
-                  <h3 style={{ color: 'var(--primary)', marginBottom: '10px' }}>Office Hours</h3>
-                  <p style={{ color: 'var(--text-muted)' }}>Monday - Sunday: 08:00 AM - 09:00 PM</p>
+                  <span className="text-[0.65rem] font-black text-[#00b4d8] uppercase tracking-wider">Business Operating Hours</span>
+                  <h3 className="text-lg font-black text-slate-800 mt-1">Working Time</h3>
+                  <div className="flex gap-3.5 mt-4 items-start">
+                    <div className="w-9 h-9 rounded-xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-[#00b4d8] shrink-0">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-slate-650 leading-relaxed">
+                      Monday - Sunday: 08:00 AM - 09:00 PM<br />
+                      <span className="text-[0.62rem] font-bold text-[#00b4d8] mt-1 block">Emergency client support operates 24/7.</span>
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <div className="glass-panel">
+              {/* Right Column: Inquiry Form */}
+              <div className="lg:col-span-7 bg-white/65 backdrop-blur-md border border-white/60 rounded-3xl p-6 sm:p-8 shadow-sm">
                 {contactSuccess ? (
-                  <div style={{ textAlign: 'center', padding: '30px' }}>
-                    <span style={{ fontSize: '3.5rem', display: 'block', marginBottom: '16px' }}>✅</span>
-                    <h3 style={{ color: 'var(--primary)', marginBottom: '10px' }}>Thank You!</h3>
-                    <p style={{ color: 'var(--text-muted)', lineHeight: '1.5' }}>Your booking inquiry has been recorded. Our team will verify rates and call you shortly.</p>
-                    <button onClick={() => setContactSuccess(false)} className="btn-secondary" style={{ marginTop: '20px' }}>Send Another Inquiry</button>
+                  <div className="text-center py-10 flex flex-col items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-teal-50 border border-teal-100 text-teal-500 flex items-center justify-center mb-4">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-[#00b4d8] font-black text-lg">Inquiry Submitted!</h3>
+                    <p className="text-xs sm:text-sm font-semibold text-slate-500 max-w-sm mt-2 leading-relaxed">
+                      Thank you for contacting Pooja Travels. Our team will review the rates and call you shortly to confirm your booking details.
+                    </p>
+                    <button 
+                      onClick={() => setContactSuccess(false)} 
+                      className="mt-6 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs rounded-xl transition-all"
+                    >
+                      Send Another Inquiry
+                    </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleContactSubmit}>
-                    <h3 style={{ marginBottom: '20px' }}>Send Booking Inquiry</h3>
-                    <div className="form-group">
-                      <label className="form-label">Full Name</label>
-                      <input 
-                        type="text" 
-                        className="form-input" 
-                        value={contactForm.name} 
-                        onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })} 
-                        required 
-                      />
+                  <form onSubmit={handleContactSubmit} className="space-y-4">
+                    <div>
+                      <h3 className="text-lg font-black text-slate-800">Send Booking Enquiry</h3>
+                      <p className="text-[0.68rem] font-bold text-slate-400 mt-1 leading-relaxed">
+                        Fill in your journey details below, and our team will get in touch with you.
+                      </p>
                     </div>
-                    <div className="form-group">
-                      <label className="form-label">Email Address</label>
-                      <input 
-                        type="email" 
-                        className="form-input" 
-                        value={contactForm.email} 
-                        onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })} 
-                        required 
-                      />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-[0.65rem] font-black text-slate-500 uppercase tracking-wider">Full Name *</label>
+                        <input 
+                          type="text" 
+                          className="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:border-[#00b4d8] bg-white/70"
+                          value={contactForm.name} 
+                          onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })} 
+                          required 
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-[0.65rem] font-black text-slate-500 uppercase tracking-wider">Email Address *</label>
+                        <input 
+                          type="email" 
+                          className="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:border-[#00b4d8] bg-white/70" 
+                          value={contactForm.email} 
+                          onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })} 
+                          required 
+                        />
+                      </div>
                     </div>
-                    <div className="form-group">
-                      <label className="form-label">Mobile Number</label>
+
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[0.65rem] font-black text-slate-500 uppercase tracking-wider">Mobile Number *</label>
                       <input 
                         type="tel" 
-                        className="form-input" 
+                        className="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:border-[#00b4d8] bg-white/70" 
                         value={contactForm.phone} 
                         onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })} 
+                        required
                       />
                     </div>
-                    <div className="form-group">
-                      <label className="form-label">Message / Details</label>
+
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[0.65rem] font-black text-slate-500 uppercase tracking-wider">Message & Journey Details *</label>
                       <textarea 
-                        rows="3" 
-                        className="form-input" 
+                        rows="4" 
+                        className="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:border-[#00b4d8] bg-white/70" 
                         style={{ resize: 'none' }}
                         value={contactForm.message} 
                         onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })} 
                         required
-                        placeholder="Mention route details, dates, and number of passengers..."
+                        placeholder="Please include trip date, pickup/drop location, number of passengers, and preferred vehicle (Cab, Minibus, or Coach)..."
                       />
                     </div>
-                    <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                      📨 Submit Message
+
+                    <button 
+                      type="submit" 
+                      className="w-full py-3 bg-[#00b4d8] hover:bg-[#0083b0] text-white font-extrabold text-xs rounded-xl transition-all shadow-sm shadow-[#00b4d8]/20 flex items-center justify-center gap-1.5 hover:-translate-y-0.5"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                      </svg>
+                      <span>Submit Inquiry</span>
                     </button>
                   </form>
                 )}
               </div>
+
             </div>
           </div>
         )}
@@ -1121,72 +1167,12 @@ export default function App() {
 
       {/* AUTH MODAL */}
       {showAuthModal && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'rgba(0,0,0,0.7)',
-          backdropFilter: 'blur(8px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000
-        }} className="animate-fade">
-          <div className="glass-panel" style={{ width: '100%', maxWidth: '400px', position: 'relative' }}>
-            <button 
-              onClick={() => setShowAuthModal(false)}
-              style={{
-                position: 'absolute',
-                top: '15px',
-                right: '15px',
-                cursor: 'pointer',
-                fontSize: '1.25rem',
-                color: 'var(--text-muted)'
-              }}
-            >
-              ✕
-            </button>
-            <h3 style={{ marginBottom: '20px', textAlign: 'center' }}>
-              {authMode === 'login' ? 'Welcome Back' : 'Create Account'}
-            </h3>
-            <form onSubmit={handleAuthSubmit}>
-              {authMode === 'register' && (
-                <>
-                  <div className="form-group">
-                    <label className="form-label">Full Name</label>
-                    <input type="text" name="name" className="form-input" required />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Phone Number</label>
-                    <input type="tel" name="phone" className="form-input" />
-                  </div>
-                </>
-              )}
-              <div className="form-group">
-                <label className="form-label">Email Address</label>
-                <input type="email" name="email" className="form-input" required />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Password</label>
-                <input type="password" name="password" className="form-input" required />
-              </div>
-              <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center', marginTop: '10px' }}>
-                {authMode === 'login' ? 'Login' : 'Sign Up'}
-              </button>
-            </form>
-            <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              {authMode === 'login' ? "Don't have an account? " : "Already have an account? "}
-              <button 
-                onClick={() => setAuthMode(authMode === 'login' ? 'register' : 'login')}
-                style={{ color: 'var(--primary)', cursor: 'pointer', fontWeight: 600 }}
-              >
-                {authMode === 'login' ? 'Sign Up' : 'Login'}
-              </button>
-            </p>
-          </div>
-        </div>
+        <AuthModal 
+          authMode={authMode} 
+          setAuthMode={setAuthMode} 
+          handleAuthSubmit={handleAuthSubmit} 
+          setShowAuthModal={setShowAuthModal} 
+        />
       )}
 
     </div>

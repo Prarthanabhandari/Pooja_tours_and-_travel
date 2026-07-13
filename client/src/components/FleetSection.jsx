@@ -12,7 +12,7 @@ export default function FleetSection({
       seats: '4+1 Seats',
       bags: '2 Bags',
       ac: 'AC Cabin',
-      image: '/white-swift-right.png',
+      image: '/white-swift-right.jpg',
       whatsappText: 'Hello Pooja Tours & Travels, I would like to book a Hatchback (Swift) for my journey.'
     },
     {
@@ -22,7 +22,7 @@ export default function FleetSection({
       seats: '6+1 Seats',
       bags: '4 Bags',
       ac: 'AC Cabin',
-      image: '/white-ertiga-right.png',
+      image: '/white-ertiga-right.jpg',
       whatsappText: 'Hello Pooja Tours & Travels, I would like to book a Family MUV (Ertiga) for my journey.'
     },
     {
@@ -32,7 +32,7 @@ export default function FleetSection({
       seats: '6+1 Seats',
       bags: '4 Bags',
       ac: 'Climate Control',
-      image: '/white-carens-right.png',
+      image: '/white-carens-right.jpg',
       whatsappText: 'Hello Pooja Tours & Travels, I would like to book a Premium MUV (Kia Carens) for my journey.'
     },
     {
@@ -42,7 +42,7 @@ export default function FleetSection({
       seats: '7+1 Seats',
       bags: '5 Bags',
       ac: 'Dual AC',
-      image: '/white-innova-right.png',
+      image: '/white-innova-right.jpg',
       whatsappText: 'Hello Pooja Tours & Travels, I would like to book a Premium MUV (Innova Crysta) for my journey.'
     },
     {
@@ -52,7 +52,7 @@ export default function FleetSection({
       seats: '17 Seats',
       bags: '12 Bags',
       ac: 'Blower AC',
-      image: '/17-seat-tempo-traveller-right.png',
+      image: '/17-seat-tempo-traveller-right.jpg',
       whatsappText: 'Hello Pooja Tours & Travels, I would like to book a 17-Seater Luxury Minibus for my group journey.'
     },
     {
@@ -62,7 +62,7 @@ export default function FleetSection({
       seats: '50 Seats',
       bags: '40 Bags',
       ac: 'Climate Control',
-      image: '/50-seat-bus-right.png',
+      image: '/50-seat-bus-right.jpg',
       whatsappText: 'Hello Pooja Tours & Travels, I would like to book a 50-Seater Luxury Bus for our group journey.'
     }
   ];
