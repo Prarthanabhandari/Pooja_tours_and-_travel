@@ -23,3 +23,10 @@ server/.env
 Thumbs.db
 .gemini/
 antigravity/
+
+# Microsoft Word temporary files
+~$*.doc*
+~$*
+
+# Backup files
+*.bak
