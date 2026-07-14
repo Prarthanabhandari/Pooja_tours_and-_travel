@@ -6,6 +6,7 @@ import PopularPackages from './PopularPackages';
 import HowItWorks from './HowItWorks';
 import Reviews from './Reviews';
 import FAQs from './FAQs';
+import OurServices from './OurServices';
 
 export default function PoojaLanding({ 
   currentPage,
@@ -336,7 +337,7 @@ export default function PoojaLanding({
         />
         <HowItWorks />
         <Reviews />
-        <FAQs />
+        <OurServices />
       </div>
 
     </div>

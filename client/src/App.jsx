@@ -475,18 +475,6 @@ export default function App() {
               currentUser={currentUser}
               handleLogout={handleLogout}
             />
-            <FleetSection 
-              searchParams={searchParams}
-              setSearchParams={setSearchParams}
-            />
-            <WhyChooseUs />
-            <PopularPackages 
-              searchParams={searchParams}
-              setSearchParams={setSearchParams}
-            />
-            <HowItWorks />
-            <Reviews />
-            <FAQs />
           </div>
         )}
 
