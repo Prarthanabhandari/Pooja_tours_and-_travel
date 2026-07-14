@@ -27,7 +27,7 @@ Pooja Tours and Travel/
 │   │   ├── components/               # React page & layout components
 │   │   │   ├── AboutUs.jsx           # Editorial About Us page with mandala animations
 │   │   │   ├── AdminDashboard.jsx    # Portal for booking approval & fleet management
-│   │   │   ├── AuthModal.jsx         # Dual-screen Login & Sign-up modal (Customer/Vendor)
+│   │   │   ├── AuthModal.jsx         # Dual-screen Login & Sign-up modal (Customer/Chauffeur)
 │   │   │   ├── BlogPage.jsx          # Travel Blog article feed with category filters
 │   │   │   ├── FAQs.jsx              # Frequently Asked Questions accordion lists
 │   │   │   ├── FleetSection.jsx      # Slide-carousels of available vehicles
@@ -36,7 +36,7 @@ Pooja Tours and Travel/
 │   │   │   ├── Header.jsx            # Legacy navigation header
 │   │   │   ├── HeaderBreadcrumbs.jsx # Subpage title cards
 │   │   │   ├── HowItWorks.jsx        # 4-Step visual workflow indicators
-│   │   │   ├── OurServices.jsx       # WhatsApp accordion routes list (Airports/Outstation)
+│   │   │   ├── OurServices.jsx       # Restored Our Services accordion section
 │   │   │   ├── PackagesPage.jsx      # Outstation tours catalog & booking connectors
 │   │   │   ├── PoojaLanding.jsx      # Core landing page (Hero, arches collage, search widget)
 │   │   │   ├── Reviews.jsx           # Curated homepage user feedback cards
@@ -124,6 +124,11 @@ Pooja Tours and Travel/
 ### 7. Contact Us Form
 - Two-column layout presenting address card information with direct support call triggers and active business hours on the left.
 - A clean digital inquiry form on the right capturing customer name, email, phone, and detailed messages.
+
+### 8. Portal & Dashboard Specifications
+- **Customer Portal & Dashboard:** Accessible upon customer login. Provides a dedicated booking history table displaying route coordinates, pickup schedules, status states (Enquiry, Confirmed, Ongoing, Completed, Cancelled), and links to request support or cancel bookings.
+- **Owner / Admin Dashboard:** Booking requests board (confirm, edit, fare overrides), active fleet manager (add/edit vehicles, KM rates), driver directory (profiles, license data, vehicle bindings), and monthly business analytics charts.
+- **Driver Chauffeur Panel:** Lightweight mobile-first checklist interface display showing daily assigned pickups, customer details, and buttons to transition active statuses (Start Trip → Arrived → Completed).
 
 ---
 
